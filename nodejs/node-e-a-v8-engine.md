@@ -1,10 +1,12 @@
-# Node e a V8 Engine
+# Node.js e a V8 Engine
 
 ## Introdução
 
 Sabe-se que o Javascript é uma linguagem que roda em browsers, ou seja, sempre que a página em que o script roda é carregada, todo o código Javascript é executado. O Nodejs basicamente pega o Javascript e transporta para outro ambiente, o sistema operacional \(Servidores rodam em sistemas operacionais\).
 
 **Isso basicamente te permite não só executar o Javascript em um browser, mas em qualquer ambiente de sistema operacional.** Seu código JavaScript irá rodar fora dos browsers.
+
+![Processo da V8 Engine.](../.gitbook/assets/untitled.png)
 
 Vale lembrar também que o Node.js não possui estrutura visual, em vez disso ele tem funcionalidades necessárias em servidores, como por exemplo, HTTP library ou filesystem API \(Sem a utilização do Node, manipulação de arquivos por exemplo, não seria possível\).
 
