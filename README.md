@@ -4,7 +4,6 @@ Todos os assuntos tratados aqui provém de minhas experiências em projetos envo
 
 ## Sumário
 
-{% page-ref page="flutter/" %}
-
-{% page-ref page="nodejs/" %}
+* [Flutter](https://jsdaniell.gitbook.io/source-code/flutter)
+* [Node.js](https://jsdaniell.gitbook.io/source-code/nodejs)
 
