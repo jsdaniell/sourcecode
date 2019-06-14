@@ -26,7 +26,7 @@ Express.js não é o único framework disponível para cumprir esse objetivo de 
 
 Após adicionar o Express.js ao projeto através do gerenciador de pacotes `npm` podemos requisitar ele como um módulo, como no exemplo abaixo:
 
-```text
+```javascript
 const http = require('http');
 const express = require('express');
 
@@ -53,7 +53,7 @@ Esta é a natureza \(puggable nature\) do Express.js onde se pode adicionar outr
 
 Existe um comando do framework que nos permite facilmente utilizar funções middlewares no nosso código:
 
-```text
+```javascript
 const http = require('http');
 const express = require('express');
 
@@ -68,19 +68,19 @@ server.listen(3000);
 
 A forma mais fácil de se utilizar esse método é da seguinte maneira:
 
-```text
+```javascript
 const app.use(() => {});
 ```
 
 Essa função anônima que adicionei ao `app` , todas as requisições \(incomming requests\) vão passar por ela, e essa função recebe três argumentos:
 
-```text
+```javascript
 const app.use((req, res, next) => {});
 ```
 
 São os parâmetros `req, res, next` , que é basicamente a requisição, a resposta e o next é uma função que permite que essa requisição possa viajar para o próximo middleware. Por exemplo se tivermos dois middlewares:
 
-```text
+```javascript
 const http = require('http');
 const express = require('express');
 
@@ -106,7 +106,7 @@ server.listen(3000);
 
 Da maneira como escrevemos acima apenas o primeiro middleware será executado. Para que o próximo middleware execute, deve-se chama a função `next()` no final do middleware anterior.
 
-```text
+```javascript
 const http = require('http');
 const express = require('express');
 
@@ -134,7 +134,7 @@ server.listen(3000);
 
 O framework não oferece uma resposta padrão, no segundo middleware é necessário escrever a resposta, agora vem mais uma grande utilidade do Express, possibilitando a escrita de código html de forma mais produtiva, utilizando o método `send()` do framework, podemos escrever qualquer tag html, que seria compátivel com o &lt;body&gt;.
 
-```text
+```javascript
 const http = require('http');
 const express = require('express');
 
@@ -162,7 +162,7 @@ server.listen(3000);
 
 Por convenção podemos também alterar o comando `server.listen(3000)` para `app.listen(3000)` , e ainda remover o `require('http')` visto que dentro da biblioteca do Express esse módulo já está implicitamente importado, removeremos também a constante `server` que já não é mais necessária já que o objeto `app` já está criado como um servidor no background do Express.js.
 
-```text
+```javascript
 const express = require('express');
 
 const app = express();
@@ -191,7 +191,7 @@ Agora todo o código está "escrito" em Express.js porém o que está acontecend
 
 Abaixo a exemplificação do quão mais fácil é direcionar e manipular rotas com o uso do Express.js, observando o código abaixo:
 
-```text
+```javascript
 const express = require('express')
 
 const app = express();
@@ -212,7 +212,7 @@ A execução do servidor irá ser efetuada normalmente, assim como a página mos
 
 No caso acima o middleware pôde ser executado tanto pelo endereço apenas com `/` quanto pelo endereço com `/add-product` . Isso acontece por que o primeiro parâmetro utilizado `('/')` não significa o caminho por inteiro e sim, está significando apenas que o endereço começará com `/` . Para funcionar corretamente o código tem de ser da seguinte maneira:
 
-```text
+```javascript
 const express = require('express')
 
 const app = express();
@@ -240,7 +240,7 @@ app.listen(port);
 
 Anteriormente fiz uma grande anotação sobre como extrair dados de uma requisição POST feita por um input de um formulário em html, porém é de se perceber que é deveras trabalhoso, visto que é necessário fazer o parsing do Buffer \(é como o Node.js funciona\) para só depois utilizar o dado em algum futuro, ainda tive de separar os index do array pra poder mostrar apenas a mensagem, agora vai-se perceber a abstração na quantidade de código que o Express nos permite.
 
-```text
+```javascript
 const express = require('express')
 
 const app = express();
@@ -266,13 +266,13 @@ app.listen(port);
 
 No código acima adicionei um formulário semelhante, porém o método de redirecionamento de rotas do Express foi usado, ainda com um novo comando de resposta, o `res.redirect('/')` no qual redireciona a página para outra, nesse caso para a página raiz. E para observar como se comporta o `body` tentei mostra-lo no console, porém sem sucesso, o resultado foi `undefined` , isso acontece por que por padrão a requisição não faz o parsing da incomming message, para que seja possível ver os dados do `body` é preciso fazer o parsing dos dados da requisição, e isso pode ser feito utilizando um módulo pra facilitar esse processo, o "body-parser", que pode ser instalado via npm utilizando o comando `npm install --save body-parser` e importado para o projeto da seguinte forma.
 
-```text
+```javascript
 const bodyParser = require('body-parser');
 ```
 
 Agora, é preciso criar um middleware do body-parser:
 
-```text
+```javascript
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -303,7 +303,7 @@ Acima a nova linha está criando um middleware no qual há a utilização de uma
 
 Se executo o código agora, posso receber o dado do formulário em `console.log('req.body')` . O resultado será um objeto em javascript, que terá como chave o nome dado a tag `<input>` e como valor, o que foi inserido no input e enviado via requisição POST como ação do `<form>` .
 
-```text
+```javascript
 [Object: null prototype] { title: 'Book' }
 ```
 
@@ -313,7 +313,7 @@ Algo a se notar até aqui, é o fato de que um envio de requisição vai ser env
 
 Aqui vai um conceito importante, já escrevi essa implementação anteriormente utilizando apenas o Node.js porém, mais uma vez o Express fazendo seu papel de facilitar as coisas, no código com node utilizei os operadores lógicos para execução da resposta apenas se a `url === '/exemplo' && method==='POST'` , utilizando o Express podemos filtrar o tipo de requisição que deve ser considerado trocando o a função `app.use()` por `app.get()` ou `app.post()` , assim pode-se filtrar o tipo de requisição aceita para a execução de um middleware específico. Com o exemplo utilizado acima, devemos filtrar uma requisição da url com o método POST, pois foi assim que defini na tag de formulário.
 
-```text
+```javascript
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -356,7 +356,7 @@ Todo o código das rotas `/add-product` e `/product` vão pertencer agora ao arq
 
 Abaixo passo o código que será referente as atividades do administrador para o arquivo referente:
 
-```text
+```javascript
 const express = require('express');
 
 const router = express.Router();
@@ -379,7 +379,7 @@ Essa é a forma com que o Express facilita a exportação do código, `express.R
 
 A forma de importação também é diferente do convencional quando feita com a utilização do framework.
 
-```text
+```javascript
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -401,7 +401,7 @@ app.listen(port);
 
 Dessa vez é necessário referenciar o arquivo "admin.js" na pasta routes. O que se deve saber agora é que o nosso `router` age como um middleware, sendo possível utilizar seus middlewares da seguinte forma:
 
-```text
+```javascript
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -429,7 +429,7 @@ O famoso erro 404 acontece quando uma requisição de algo que não tem resposta
 
 Sendo assim faz sentido que a captura de uma url qualquer que não tem resposta pré-definida caia na implementação do `app.use()` .
 
-```text
+```javascript
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -459,7 +459,7 @@ Antes da execução do método de envio no código de captura de uma requisiçã
 
 Aprimorando os códigos anteriores, há uma forma de ter dois middlewares com o mesmo caminho de url como requisição porém com dois resultados diferentes, como uma resposta para requisições dessa url feitas com POST e uma resposta para requisições feitas dessa url com método GET, tendo os dois middlewares na mesma página o uso desse middleware no código do servidor principal, muda para que filtre os caminhos e execute apenas os middlewares provindos do arquivo `admin.js` . Abaixo segue o exemplo:
 
-```text
+```javascript
 // Código do arquivo admin.js
 
 const express = require('express');
@@ -482,7 +482,7 @@ module.exports = router;
 
 Pode-se observar que agora há duas respostas para duas requisições da mesma url com métodos diferentes e o `action` da tag "input" agora aponta para o `/add-product` utilizando POST. Se pode perceber também que a requisiçã do "input" procura por um middleware derivado de `/admin/add-product` , sendo assim é mais um filtro adiconado. Agora no arquivo main.js:
 
-```text
+```javascript
 const express = require('express');
 const bodyParser = require('body-parser');
 
